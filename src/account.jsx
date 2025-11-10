@@ -14,16 +14,8 @@ function Access() {
       [inputname]: inputvalue
      }))
   }
-  function login(event){
-    event.preventDefault();
-    if(value.username === "yared" && value.password === "12345678"){
-        setnewpage(true)
-      }
-    else{
-      alert("please enter the correct username and password")
-    }
-  }
-  if (newpage){
+  function login(){
+    
     return <Subject/>
   }
   return (
