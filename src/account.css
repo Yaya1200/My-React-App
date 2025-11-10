@@ -11,21 +11,45 @@ form input {
   height: 30px;
   padding-bottom: 10px;
   margin-bottom: 20px;
-}
-.form-container{
-  text-align: right;
-  position: relative;
-  padding-top: 100px;                 
-  margin-left: 900px;
-}
-form h1{
-  padding-right: 100px;
+  padding-left: 10px;
 }
 form button{
-  margin-right:100px;
-  border-radius: 10px;
-  width: 100px;
+  width: 250px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
+form h1{
+  font-size: 25px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.login-using-password{
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 35px;
+  background-color: rgb(214, 201, 168);;
+}
+.login-using-google{
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 35px;
+ 
+}
+
+.form-container{
+  text-align: center;
+  position: relative;
+  margin-top: 50px;                 
+  margin-left: 900px;
+  margin-right: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(244, 234, 207);
+  border-radius: 15px;
+  width: 300px;
+  height: 400px;
+
+}
+
 body{
     background-image: url("./images/backgroundimage.jpg");
     height: 97vh;
