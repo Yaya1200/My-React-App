@@ -4,29 +4,34 @@ import cors from 'cors';
 const app = express();
 const Port = 5000;
 const uri = "mongodb://localhost:27017";
-const client = MongoClient(uri);
+const client = new MongoClient(uri);
 app.use(express.json());
 app.use(cors());
-
-app.post("/api/data", (req,res)=>{
-  const {title, subject, content} = req.body;
-  async function run(){
+let collection;
+ async function run(){
     try{
       await client.connect();
       const database = client.db("mydatabase");
-      const collection = database.collection("mycollection");
-      const inputs  = {title: title, subject: subject, content:content};
-      const result = await collection.insertone(inputs);
-
-
+      collection = database.collection("mycollection");
+      console.log("the data is stored successfully");x
+      app.listen(Port, ()=>{
+  console.log(`listening to port ${Port}`)
+})
     }
     catch(error){
       console.error(error)
     }
+
   }
+  run();
+
+app.post("/api/data", async(req,res)=>{
+  const {title, subject, content} = req.body;
+  const inputs  = {title: title, subject: subject, content:content};
+  await collection.insertOne(inputs);
+ 
+  
+
 
 })
 
-app.listen(Port, ()=>{
-  console.log(`listening to port ${Port}`)
-})
