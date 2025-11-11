@@ -10,6 +10,20 @@ app.use(cors());
 
 app.post("/api/data", (req,res)=>{
   const {title, subject, content} = req.body;
+  async function run(){
+    try{
+      await client.connect();
+      const database = client.db("mydatabase");
+      const collection = database.collection("mycollection");
+      const inputs  = {title: title, subject: subject, content:content};
+      const result = await collection.insertone(inputs);
+
+
+    }
+    catch(error){
+      console.error(error)
+    }
+  }
 
 })
 
