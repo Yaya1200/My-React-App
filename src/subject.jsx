@@ -27,7 +27,7 @@ function Subject() {
 
   async function addarray() {
     try{
-      const result = await axios.post("http://localhost:5173/api/data", inputs);
+      const result = await axios.post("http://localhost:5000/api/data", inputs);
       console.log(result.data);
 
     }
