@@ -8,6 +8,7 @@ const client = new MongoClient(uri);
 app.use(express.json());
 app.use(cors());
 let collection;
+let output;
 async function run() {
   try{
   await client.connect();
@@ -23,8 +24,17 @@ async function run() {
   
   
 }
-  run();
+run();
 
+app.get("/api/data", async(req, res)=>{
+  try{
+    const response = await collection.find({}).toArray();
+    res.json(response);
+  }
+  catch(error){
+    console.error("error", error);
+  }
+})
 app.post("/api/data", async(req,res)=>{
   const {title, subject, content} = req.body;
   const inputs  = {title: title, subject: subject, content:content};

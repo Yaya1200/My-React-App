@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './subject.css';
 import List1 from "./list";
@@ -13,9 +13,8 @@ function Subject() {
     subject: "",
     content: ""
   });
-
+  const [arrayinput, setarrayinput] = useState([])
   const [isexpanded, setisexpanded] = useState(false);
-
  
   function setinputvalues(event) {
     const inputname = event.target.name;
@@ -24,25 +23,34 @@ function Subject() {
       ...pre,
       [inputname]: inputvalue
     }));
+  } 
+  useEffect(() => {
+  async function fetchData() {
+    try {
+      const response = await axios.get("http://localhost:5000/api/data");
+      setarrayinput(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
+  fetchData();
+}, []);
 
-  async function addarray() {
+
+   async function addarray() {
     try{
       const result = await axios.post("http://localhost:5000/api/data", inputs);
-      console.log(result.data);
-
-    }
-    catch(error){
-      console.error("Error", error);
-    }
-    
-
-
     setinputs({
       title: "",
       subject: "",
       content: ""
-    });
+    });}
+     catch(error){
+      console.error("Error", error);
+    }
+  }
+  function addtoarray(){
+     setarrayinput(prev=>([...prev, inputs]));
   }
 function deleteitems(id) {
   setarrayinput((prev) => 
@@ -52,11 +60,10 @@ function deleteitems(id) {
 function expanded(){
   setisexpanded(true)
 }
-const arrayinput = [{
-  title: "hello",
-  subject: "english",
-  content: "salkjf adkl "
-}]
+function handler(){
+  addarray(); addtoarray();
+}
+
 
 
   return (
@@ -112,7 +119,7 @@ const arrayinput = [{
 
          <Zoom in={isexpanded}> 
           <button
-            onClick={addarray}
+            onClick={handler}
             type="button"
             className="btn btn-outline-info d-block ms-auto">
             < AddIcon />
