@@ -4,7 +4,7 @@ import cors from 'cors';
 const app = express();
 const Port = 5000;
 const uri = "mongodb://localhost:27017";
-const client = MongoClient(uri)
+const client = MongoClient(uri);
 app.use(express.json());
 app.use(cors());
 
