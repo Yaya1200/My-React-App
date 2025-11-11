@@ -1,6 +1,7 @@
 import express from  'express';
 const app = express();
 const Port = 5000;
+app.use(express.json());
 app.post("/api/data", (req,res)=>{
   console.log(req.body);
 })
