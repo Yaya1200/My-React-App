@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Zoom from '@mui/material/Zoom';
 import HighlightIcon from '@mui/icons-material/Highlight';
 import Fab from '@mui/material/Fab';
+import axios from "axios";
 function Subject() {
   const [inputs, setinputs] = useState({
     title: "",
