@@ -35,6 +35,12 @@ form h1{
   height: 35px;
  
 }
+.create-account{
+  border: none;
+  margin-top: 0px;
+  padding-top: 0px;
+  background-color: rgb(244, 234, 207);;
+}
 
 .form-container{
   text-align: center;

@@ -13,7 +13,6 @@ function Subject() {
     content: ""
   });
 
-  const [arrayinput, setarrayinput] = useState([]);
   const [isexpanded, setisexpanded] = useState(false);
 
  
@@ -26,8 +25,16 @@ function Subject() {
     }));
   }
 
-  function addarray() {
-    setarrayinput((prevarray) => [...prevarray, inputs]);
+  async function addarray() {
+    try{
+      const result = await axios.post("http://localhost:5173/api/data", inputs);
+      console.log(result.data);
+
+    }
+    catch(error){
+      console.error("Error", error);
+    }
+    
 
 
     setinputs({
@@ -44,6 +51,11 @@ function deleteitems(id) {
 function expanded(){
   setisexpanded(true)
 }
+const arrayinput = [{
+  title: "hello",
+  subject: "english",
+  content: "salkjf adkl "
+}]
 
 
   return (
