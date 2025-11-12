@@ -1,6 +1,7 @@
 import "./account.css";
 import React,{useState} from "react";
 import Subject from "./subject";
+import axios from "axios";
 
 
 function Access() {
@@ -14,19 +15,18 @@ function Access() {
       [inputname]: inputvalue
      }))
   }
-  async function inputaccount() {
+  async function inputaccount(k) {
+    k.preventDefault();
     try{
-    await axios.post("http://api/input/account", value);
+    await axios.post("http://localhost:5000/api/input/account", value);
+       setnewpage(true);
     }
     catch(error){
       console.error("error", error);
     }
     
   }
-  function login1(){
-    setnewpage(true);
 
-  }
   if(newpage){
     return <Subject/>
   }
@@ -35,14 +35,14 @@ function Access() {
 
     <div>
     <h1 style={{textAlign:"center", position: "relative"}}>smart study</h1>
-   <form className="form-container" >
+   <form className="form-container" onSubmit={inputaccount}>
     <h1>Login Now </h1>
     <input type="text" name="username" onChange={inputs} placeholder="username" value = {value.username}/>
     <br />
     <input type="password" name="password" onChange={inputs} placeholder="password" value = {value.password}/>
     <br />
   
-    <button className="login-using-password" type="submit" onClick={login1}>
+    <button className="login-using-password" type="submit" onClick={inputaccount}>
   Login
 </button>
 

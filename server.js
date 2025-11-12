@@ -10,7 +10,7 @@ const client = new MongoClient(uri);
 const account = new pg.Client({
   user: 'postgres',     
   host: 'localhost',
-  database: 'takenote',
+  database: 'TakeNote',
   password: '42750305',
   port: 5433,           
 });
@@ -35,6 +35,7 @@ async function run() {
 run();
 
 
+
 app.get("/api/data", async (req, res) => {
   try {
     const response = await collection.find({}).toArray();
@@ -56,6 +57,15 @@ app.post("/api/data", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+app.post("/api/input/account", async(req,res)=>{
+  try{
+    await account.query("INSERT INTO myreactapp (username, password) VALUES( $1, $2)", [req.body.username, req.body.password]);
+     res.send("Data inserted successfully");
+  }
+  catch(error){
+    console.error("error", error)
+  }
+})
 
 app.delete("/api/data/:id", async (req, res) => {
   try {
