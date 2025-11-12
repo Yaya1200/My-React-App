@@ -39,7 +39,7 @@ function Subject() {
 
    async function addarray() {
     try{
-      const result = await axios.post("http://localhost:5000/api/data", inputs);
+      await axios.post("http://localhost:5000/api/data", inputs);
     setinputs({
       title: "",
       subject: "",
