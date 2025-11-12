@@ -66,6 +66,22 @@ app.post("/api/input/account", async(req,res)=>{
     console.error("error", error)
   }
 })
+app.post("/api/create/account", async(req,res)=>{
+  try{
+   const response =  await account.query("SELECT * FROM myreactapp WHERE username= $1 AND password = $2",[req.body.username, req.body.password]);
+   
+    if(response.rows.length > 0){
+      res.json(true);
+    }
+    else{
+      res.json(false);
+
+    }  
+  }
+  catch(error){
+    console.error("error", error)
+  }
+})
 
 app.delete("/api/data/:id", async (req, res) => {
   try {
