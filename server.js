@@ -1,11 +1,19 @@
 import express from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
+import pg from 'pg';
 import cors from 'cors';
 
 const app = express();
 const Port = 5000;
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
+const account = new pg.Client({
+  user: 'postgres',     
+  host: 'localhost',
+  database: 'takenote',
+  password: '42750305',
+  port: 5433,           
+});
 
 app.use(express.json());
 app.use(cors());
