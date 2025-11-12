@@ -7,7 +7,7 @@ return(
   <div className="card-body">
     <h5 className="card-title">{prop.title}</h5>
     <p className="card-text">{prop.content}</p>
-    <button onClick={() => prop.ondelete(prop.id, prop.id_1)} className="btn btn-sm ">
+    <button onClick={() => prop.ondelete(prop._id)} className="btn btn-sm ">
           <DeleteIcon style={{color:"rgba(155, 32, 32, 1)"}}/>
         </button>
   </div>
