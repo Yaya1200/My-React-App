@@ -9,7 +9,7 @@ const client = new MongoClient(uri);
 app.use(express.json());
 app.use(cors());
 let collection;
-let output;
+
 async function run() {
   try{
   await client.connect();
@@ -46,7 +46,7 @@ app.delete("/api/data/:id", async (req, res) => {
   try {
     const { id } = req.params;
     console.log("Deleting ID:", id); 
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    await collection.deleteOne({ _id: new ObjectId(id) });
     res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     console.error("Error deleting item:", error);

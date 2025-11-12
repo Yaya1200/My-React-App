@@ -40,6 +40,8 @@ function Subject() {
    async function addarray() {
     try{
       await axios.post("http://localhost:5000/api/data", inputs);
+      const response = await axios.get("http://localhost:5000/api/data");
+      setarrayinput(response.data);
     }
      catch(error){
       console.error("Error", error);
@@ -62,13 +64,15 @@ function handler(){
  async function deleteitems(id1) {
     try{
     await axios.delete(`http://localhost:5000/api/data/${id1}`)
+    const response = await axios.get("http://localhost:5000/api/data");
+    setarrayinput(response.data);
   
 }
   catch(error){
     console.error("Error", error);
   }
 }
-function deleteitems(id){
+function deleteitemsfromarray(id){
 setarrayinput((prev) => 
     prev.filter((elements, index) => index !== id)
   );
