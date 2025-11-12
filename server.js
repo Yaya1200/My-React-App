@@ -14,6 +14,8 @@ const account = new pg.Client({
   password: '42750305',
   port: 5433,           
 });
+account.connect();
+
 
 app.use(express.json());
 app.use(cors());

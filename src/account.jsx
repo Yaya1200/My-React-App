@@ -14,6 +14,15 @@ function Access() {
       [inputname]: inputvalue
      }))
   }
+  async function inputaccount() {
+    try{
+    await axios.post("http://api/input/account", value);
+    }
+    catch(error){
+      console.error("error", error);
+    }
+    
+  }
   function login1(){
     setnewpage(true);
 
