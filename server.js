@@ -2,6 +2,7 @@ import express from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
 import pg from 'pg';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
 
 const app = express();
 const Port = 5000;
@@ -14,6 +15,7 @@ const account = new pg.Client({
   password: '42750305',
   port: 5433,           
 });
+const saltRounds = 10;
 account.connect();
 
 
@@ -59,8 +61,23 @@ app.post("/api/data", async (req, res) => {
 });
 app.post("/api/input/account", async(req,res)=>{
   try{
-    await account.query("INSERT INTO myreactapp (username, password) VALUES( $1, $2)", [req.body.username, req.body.password]);
-     res.send("Data inserted successfully");
+    const username = req.body.username;
+    const password = req.body.password;
+    const result = await account.query("SELECT * FROM myreactapp WHERE username = $1 AND password = $2",[username, password]);
+    if(result.rows.length > 0){
+      res.json("The username and password already exists")
+    }
+    else{
+      bcrypt.hash(password, saltRounds, async(err, hash)=>{
+        if(err){
+          console.log("error", err);
+        }
+        else{
+          await account.query("INSERT INTO myreactapp (username, password) VALUES( $1, $2)", [username, hash]);
+     res.json("Data inserted successfully");
+      }})
+    }
+
   }
   catch(error){
     console.error("error", error)
@@ -68,10 +85,22 @@ app.post("/api/input/account", async(req,res)=>{
 })
 app.post("/api/create/account", async(req,res)=>{
   try{
-   const response =  await account.query("SELECT * FROM myreactapp WHERE username= $1 AND password = $2",[req.body.username, req.body.password]);
+    const username = req.body.username;
+    const loginpassword = req.body.password;
+   const response =  await account.query("SELECT * FROM myreactapp WHERE username = $1",[username]);
    
     if(response.rows.length > 0){
-      res.json(true);
+        const user = response.rows[0];
+         const hashedpassword = user.password;
+         bcrypt.compare(loginpassword, hashedpassword, (result, err)=>{
+          if(err){
+            console.log("error", err)
+          }
+          else{
+           res.json(result);
+          }
+         })
+      
     }
     else{
       res.json(false);

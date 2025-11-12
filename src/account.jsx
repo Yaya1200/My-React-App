@@ -19,12 +19,13 @@ function Access() {
   async function inputaccount(k) {
     k.preventDefault();
     try{
-    await axios.post("http://localhost:5000/api/input/account", value);
+    const response = await axios.post("http://localhost:5000/api/input/account", value);
        setcreateaccount(false);
        setvalue({
         username: "",
         password: ""
        })
+       alert(response.data);
     }
     catch(error){
       console.error("error", error);
@@ -36,6 +37,10 @@ function Access() {
     try{
       const response = await axios.post("http://localhost:5000/api/create/account", value);
       response.data ? setnewpage(true): alert("incorrect password or username");
+      setvalue({
+        username: "",
+        password: ""
+       })
     }
     catch(error){
       console.error("error", error);
