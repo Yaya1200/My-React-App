@@ -52,10 +52,17 @@ function Subject() {
   function addtoarray(){
      setarrayinput(prev=>([...prev, inputs]));
   }
-function deleteitems(id) {
+ async function deleteitems(id, id1) {
+   try{
+    await axios.delete(`http://localhost:5000/api/data/${id1}`)
   setarrayinput((prev) => 
     prev.filter((elements, index) => index !== id)
   );
+  console.log(id);
+}
+  catch(error){
+    console.error("Error", error);
+  }
 }
 function expanded(){
   setisexpanded(true)
@@ -136,16 +143,22 @@ function handler(){
   Width: "600px"  
 }}>
 
-        {arrayinput.map((values, index) => (
-          <List1
-            key={index}
-            id={index}
-            title={values.title}
-            subject={values.subject}
-            content={values.content}
-            ondelete={deleteitems}
-          />
-        ))}
+       {arrayinput.map((values, index) => {
+  const id1 = values._id ? values._id : null;
+
+  return (
+    <List1
+      key={id1 || index} 
+      id={index}
+      id1={id1}
+      title={values.title}
+      subject={values.subject}
+      content={values.content}
+      ondelete={deleteitems}
+    />
+  );
+})}
+
       </div>
     </div>
   );

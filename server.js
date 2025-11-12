@@ -1,6 +1,7 @@
 import express from  'express';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import cors from 'cors';
+import axios from 'axios';
 const app = express();
 const Port = 5000;
 const uri = "mongodb://localhost:27017";
@@ -41,4 +42,28 @@ app.post("/api/data", async(req,res)=>{
   await collection.insertOne(inputs);
 
 })
+app.delete("/api/data/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("Deleting ID:", id); // debug log
+
+    if (!id) {
+      return res.status(400).json({ message: "ID is required" });
+    }
+
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    res.status(200).json({ message: "Deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({ error: "Failed to delete item" });
+  }
+});
+
+
+
 
