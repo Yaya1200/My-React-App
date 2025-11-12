@@ -40,36 +40,45 @@ function Subject() {
    async function addarray() {
     try{
       await axios.post("http://localhost:5000/api/data", inputs);
-    setinputs({
-      title: "",
-      subject: "",
-      content: ""
-    });}
+    }
      catch(error){
       console.error("Error", error);
     }
   }
   function addtoarray(){
      setarrayinput(prev=>([...prev, inputs]));
+       setinputs({
+      title: "",
+      subject: "",
+      content: ""
+    });
   }
- async function deleteitems(id, id1) {
-   try{
-    await axios.delete(`http://localhost:5000/api/data/${id1}`)
-  setarrayinput((prev) => 
-    prev.filter((elements, index) => index !== id)
-  );
-  console.log(id);
-}
-  catch(error){
-    console.error("Error", error);
-  }
-}
-function expanded(){
+  function expanded(){
   setisexpanded(true)
 }
 function handler(){
   addarray(); addtoarray();
 }
+ async function deleteitems(id1) {
+    try{
+    await axios.delete(`http://localhost:5000/api/data/${id1}`)
+  
+}
+  catch(error){
+    console.error("Error", error);
+  }
+}
+function deleteitems(id){
+setarrayinput((prev) => 
+    prev.filter((elements, index) => index !== id)
+  );
+  console.log(id);
+}
+function deletehandler(id, id1){
+  deleteitems(id1);
+  deleteitemsfromarray(id);
+}
+
 
 
 
@@ -154,7 +163,7 @@ function handler(){
       title={values.title}
       subject={values.subject}
       content={values.content}
-      ondelete={deleteitems}
+      ondelete={deletehandler}
     />
   );
 })}
