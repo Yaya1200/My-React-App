@@ -63,7 +63,7 @@ app.post("/api/input/account", async(req,res)=>{
   try{
     const username = req.body.username;
     const password = req.body.password;
-    const result = await account.query("SELECT * FROM myreactapp WHERE username = $1 AND password = $2",[username, password]);
+    const result = await account.query("SELECT * FROM myreactapp WHERE username = $1",[username]);
     if(result.rows.length > 0){
       res.json("The username and password already exists")
     }
@@ -92,7 +92,7 @@ app.post("/api/create/account", async(req,res)=>{
     if(response.rows.length > 0){
         const user = response.rows[0];
          const hashedpassword = user.password;
-         bcrypt.compare(loginpassword, hashedpassword, (result, err)=>{
+         bcrypt.compare(loginpassword, hashedpassword, (err, result)=>{
           if(err){
             console.log("error", err)
           }
