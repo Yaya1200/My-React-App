@@ -3,17 +3,19 @@ import { MongoClient, ObjectId } from 'mongodb';
 import pg from 'pg';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
+import env from 'dotenv';
 
 const app = express();
 const Port = 5000;
+env.config();
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 const account = new pg.Client({
-  user: 'postgres',     
-  host: 'localhost',
-  database: 'TakeNote',
-  password: '42750305',
-  port: 5433,           
+  user: process.env.USERNAME,     
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+  port: process.env.PORT,           
 });
 const saltRounds = 10;
 account.connect();
