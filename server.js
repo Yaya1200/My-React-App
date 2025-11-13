@@ -4,6 +4,8 @@ import pg from 'pg';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import env from 'dotenv';
+import session from 'express-session';
+import passport from 'passport';
 
 const app = express();
 const Port = 5000;
@@ -19,7 +21,13 @@ const account = new pg.Client({
 });
 const saltRounds = 10;
 account.connect();
-
+app.use(session({
+secret: "TOPSECRET",
+resave: false,
+saveUninitialized: true
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(cors());
