@@ -11,11 +11,11 @@ env.config();
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 const account = new pg.Client({
-  user: process.env.USERNAME,     
-  host: process.env.HOST,
-  database: process.env.DATABASE,
-  password: process.env.PASSWORD,
-  port: process.env.PORT,           
+  user: process.env.PG_USERNAME,     
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,           
 });
 const saltRounds = 10;
 account.connect();
